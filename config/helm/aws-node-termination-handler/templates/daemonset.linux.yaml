@@ -138,8 +138,13 @@ spec:
           - name: WEBHOOK_TEMPLATE_FILE
             value: {{ print "/config/" .Values.webhookTemplateConfigMapKey | quote }}
           {{- end }}
+          {{- if .Values.webhookTemplateJson }}
+          - name: WEBHOOK_TEMPLATE
+            value: {{ toJson .Values.webhookTemplateJson | quote }}
+          {{- else }}
           - name: WEBHOOK_TEMPLATE
             value: {{ .Values.webhookTemplate | quote }}
+          {{- end }}
           - name: DRY_RUN
             value: {{ .Values.dryRun | quote }}
           - name: ENABLE_SPOT_INTERRUPTION_DRAINING
